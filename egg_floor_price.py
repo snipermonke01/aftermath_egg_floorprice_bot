@@ -82,16 +82,19 @@ bot = discord.Bot(intents=intents)
 async def update_status():
 
     while True:
-        # Set the bot's status
-        await bot.change_presence(
-            activity=discord.Activity(
 
-                type=discord.ActivityType.watching,
-                name="Floor Price: {} SUI".format(_get_floor_price())
-            ),
-
-            status=discord.Status.online
-        )
+        try:
+            # Set the bot's status
+            await bot.change_presence(
+                activity=discord.Activity(
+                    type=discord.ActivityType.watching,
+                    name="Floor Price: {} SUI".format(_get_floor_price())
+                ),
+                status=discord.Status.online
+            )
+        except Exception as e:
+            # Handle any exceptions that occur while updating the status
+            print(f"An error occurred while updating the bot's status: {e}")
 
         await asyncio.sleep(30)  # Wait for 30 seconds before updating the status again
 
